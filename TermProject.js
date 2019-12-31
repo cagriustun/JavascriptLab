@@ -2,11 +2,22 @@ var canvas = document.getElementById('canvas');
 var c = canvas.getContext('2d');
 var W = canvas.width;
 var H = canvas.height;
+
+var wall = new Audio();
+var scorePlus = new Audio();
+var lost = new Audio();
+
+wall.src = "music/wall.mp3";
+lost.src = "music/lost.mp3";
+scorePlus.src = "music/scorePlus.mp3";
+
 function kare(){
+	this.speedY = 0;
 	this.x = 0;
 	this.y = 0;
 	this.w = 0;
 	this.h = 0;
+	this.speedY = 0;
 	this.draw = function(){
 		c.fillRect(this.x,this.y,this.w,this.h);
 	}
@@ -47,47 +58,63 @@ var mousemove = function(e){
 }
 
 function Down(){
-	gamer1.y += 15;
-	gamer2.y += 15;
+	gamer1.speedY -= 2; 
+	gamer2.speedY -= 2; 
 }
 function Up(){
-	gamer1.y -= 15;
-	gamer2.y -= 15;
+	gamer1.speedY -= 2; 
+	gamer2.speedY -= 2; 
 }
-
+function restart(){
+	window.location.reload();
+}
+function stop(){
+    document.getElementById("bttn").style.color = "green"; 
+}
 
 function draw(){
 	c.clearRect(0,0,W,H);
 	c.font = "20px Candara";
-	c.fillText("Score: "+score,W/2-40,50)
+	c.fillText("Score: "+score,W/2-40,50);
 	gamer1.draw(); 
 	gamer2.draw();
 	ball.draw();
 	
+	
+	
 	if(ball.y + ball.r > H || ball.y < 0){
 		ball.vy *= -1;
+		wall.play();
 	}
 	
 	if(ball.x - ball.r < gamer1.x + gamer1.w || ball.x + ball.r > gamer2.x){
 		if(ball.x - ball.r < gamer1.x + gamer1.w){
 			if(ball.y + ball.r > gamer1.y && ball.y < gamer1.y + gamer1.h){	
 				score++;
+				scorePlus.play();
 			}
 			else{
-				window.alert("Your Score : "+ score);
+				//window.alert("Your Score : "+ score);
+				lost.play();
+				c.fillText("You are lost!",W/2-60,100);
+				c.fillText("Please Click Restart Button",W/2-120,120);
 				score = 0;
-				window.location.reload();
+				//window.location.reload();
 				clearInterval(init);
 			}
 		}
 		else if(ball.x + ball.r > gamer2.x){
 			if(ball.y + ball.r > gamer2.y && ball.y < gamer2.y + gamer2.h){
 				score++;
+				scorePlus.play();
 			}
 			else{
-				window.alert("Your Score : "+ score);
+				//window.alert("Your Score : "+ score);
+				lost.play();
+				c.fillText("You are lost!",W/2-60,100);
+				c.fillText("Please Click Restart Button",W/2-120,120);
 				score = 0;
-				window.location.reload();
+				//window.location.reload();
 				clearInterval(init);
 			}
 		}
@@ -97,5 +124,9 @@ function draw(){
 	ball.y += ball.vy;
 	canvas.onmousemove = mousemove;
 }
-
 var init = setInterval(draw,20);
+
+
+
+
+

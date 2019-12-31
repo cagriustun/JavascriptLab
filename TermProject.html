@@ -6,11 +6,11 @@
     <link rel="icon" sizes="192x192">
     <title>Term Project</title>
 <style>
-	canvas{
+	#canvas{
 		border:1px solid #000;
 		margin-top:20px;
 		}
-	button{
+	#bttn{
 		background: white;
 		color: #000;
 		font-weight: bold;
@@ -20,15 +20,28 @@
 		font-family:Candara;
 		border-radius: 90px;
 		}
+	#buttonRestart{
+		background: white;
+		color: #000;
+		font-weight: bold;
+		width: 150px;
+		height: 40px;
+		font-size: 22px;
+		font-family:Candara;
+		border-radius: 90px;
+		margin-top:10px;
+		margin-left:70px;
+		}
 </style>
 </head>
 <body>
 <div id="container" style="width:303px;">
 <canvas id="canvas" width="300px" height="200"></canvas>
 <div style="margin-top:10px;">
-<button style="float:right;" onclick="Down()">↓</button>
-<button style="" onclick="Up()">↑</button>
+<button id="bttn" style="float:right;" onmousedown="Down()" onmouseup="stop()">↓</button>
+<button id="bttn" onmousedown="Up()" onmouseup="stop()">↑</button>
 </div>
+<div><button id="buttonRestart" onmouseup="restart()">RESTART</button></div>
 <div style="margin-top:10px;"><a href="https://www.youtube.com/watch?v=pa8USBcFI-c">REF</a></div>
 </div>
 <script src="TermProject.js"></script>
