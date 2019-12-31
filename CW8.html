@@ -1,0 +1,80 @@
+<DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="192x192">
+    <title>CW 8</title>
+
+  <style>
+    body { max-width: 440px; }
+    #sample { overflow-x: auto; }
+    table { border-collapse: collapse; }
+    th { color: blue; padding: 5px 5px; }
+    td { 
+        border: 1px solid blue; 
+        padding: 5px 5px; 
+        text-align: center; 
+        position: relative;
+    }
+    td:hover .tip {
+        visibility: visible;
+    }
+    td .tip {
+        visibility: hidden;
+        font-size: small;
+        background-color: blue;
+        color: white;
+        text-align: center;
+        padding: 5px 5px;
+        position: absolute;
+        left: 5px; 
+        top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<center>
+<h2 id=title></h2>
+<table id="tablo"></table>
+<script>
+"use strict";
+var planet = [];
+var name,diam,mass,radius,period,p;
+var caption=["Name","Diam","Mass","Radius","Period"];
+const url = "https://raw.githubusercontent.com/cagriustun/JavascriptLab/master/a.txt";
+fetch(url).then(txt=>txt.text()).then(txt =>{
+    let l = txt.split("\n");
+    for (let line of l) {
+    	let data = line.split("\t");
+    	    name = data[0],
+            diam = data[1],
+            mass = data[2],
+            radius = data[3],
+            period = data[4];
+    	planet.push([name,diam,mass,radius,period]);
+	}
+	let planetLength = planet.length;
+	let c = planet[0].length;
+    let row = "<th></th>";
+    for (let i = 0; i <caption.length; i++) {
+        row += "<th>"+caption[i]+"</th>";
+        }
+    let text = "<tr>"+row+"</tr>";
+    for (let i = 1; i < planetLength-1; i++) {
+       row = "<th></th>";
+       for (let j = 0; j < c; j++) {
+       	  p = planet[i];
+          row += "<td>"+p[j]+"</td>";
+       }
+       text += "<tr>"+row+"</tr>";
+    }
+    tablo.innerHTML = text;
+});
+
+
+</script>
+
+</body>
+</html> 

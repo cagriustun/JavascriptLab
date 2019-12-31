@@ -1,0 +1,118 @@
+<html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Animation</title>
+<script>
+"use strict";
+window.onload = function() {
+document.getElementById("kids").animate([
+  // keyframes
+  { transform: "rotate(0)" },
+  { transform: "rotate(359deg)" }, 
+], { 
+  // timing options
+  duration: 3000,
+  iterations: Infinity
+});
+};
+
+
+"use strict";
+const
+  t1 = { transform: ["translateY(0)", "translateY(20px)", "translateY(0)","translateY(100px)", "translateY(0)"] },
+  t2 = { transform: ["translateY(0)", "translateY(40px)", "translateY(0)","translateY(80px)", "translateY(0)"] },
+  t3 = { transform: ["translateY(0)", "translateY(60px)", "translateY(0)","translateY(60px)", "translateY(0)"] },
+  t4 = { transform: ["translateY(0)", "translateY(80px)", "translateY(0)","translateY(40px)", "translateY(0)"] },
+  t5 = { transform: ["translateY(0)", "translateY(100px)", "translateY(0)","translateY(20px)", "translateY(0)"] },
+  t6 = { color: ["yellow", "cyan", "magenta", "yellow"] };
+	  
+	  
+	  
+</script>
+<style>
+
+#kids{
+	width:300px;
+    height: auto;
+    display: table;
+    margin:0 auto;
+	}
+#isim{
+    height: auto;
+    display: table;
+    margin:0 auto;
+	
+	}
+#c{
+	font-size: 360%;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+    margin:0 auto;
+	color:yellow;
+	}
+#a{
+	font-size: 360%;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+    margin:0 auto;
+	color:yellow;
+	}
+#g{
+	font-size: 360%;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+    margin:0 auto;
+	color:yellow;
+	}
+#r{
+	font-size: 360%;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+    margin:0 auto;
+	color:yellow;
+	}
+#i{
+	font-size: 360%;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+    margin:0 auto;
+	color:yellow;
+	}
+#button {
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+    display: table;
+    margin:10 auto;
+	padding:5;
+	}
+#baslik {
+	font-family: Arial, Helvetica, sans-serif;
+	display: table;
+	margin:0 auto;
+	}
+
+</style>
+</head>
+<body>
+  <h1 id=baslik>Animation</h1>
+  <u><h4 id="baslik">Example 1</h2></u>
+  <img id="kids" src="kids.png">
+  <hr>
+  <u><h4 id="baslik">Example 2</h2></u>
+  <button id="button" onclick="c.animate(t1, 3000),c.animate(t6, 3000),
+				   a.animate(t2, 3000),a.animate(t6, 3000),
+				   g.animate(t3, 3000),g.animate(t6, 3000),
+				   r.animate(t4, 3000),r.animate(t6, 3000),
+				   i.animate(t5, 3000),i.animate(t6, 3000)">
+				   HAREKET İÇİN TIKLA
+				   </button>
+  <div id="isim">
+  <div id="c">Ç</div>
+  <div id="a">A</div>
+  <div id="g">Ğ</div>
+  <div id="r">R</div>
+  <div id="i">I</div>
+  </div>
+  
+</body>
+</html>

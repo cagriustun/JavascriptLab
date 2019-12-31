@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://maeyler.github.io/favicon.ico">
+    <title>Temperature Conversion </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #inp { width: 70px }
+	#inp1 { width: 70px }
+    #out {
+        font-size: 18px;
+        background: blue;
+        color: white;
+        text-align: center;	
+        padding: 10px;
+    }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked cagri4 -->
+
+<h2 id=title>This text is not shown. Why?</h2>
+Celcius 
+<input type=number id=inp value=0 onChange="celToFah()">
+&emsp;
+Celcius 
+<input type=number id=inp1 value=32 onChange="fahToCel()">
+&emsp;
+
+
+<hr />
+<b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+
+<hr />
+<p>Ref: <a href="https://www.w3schools.com/js/" 
+   target="NewTab">JS Tutorial</a>
+</p>
+
+<script>
+"use strict";
+// JavaScript comment
+
+	function celToFah() {
+		let c = Number(inp.value)
+		console.log("Celcius: "+ c);
+		inp1.value = 1.8 * c + 32 ;
+	}
+	function fahToCel() {
+		let f = Number(inp1.value)
+		console.log("Fahrenheit: "+ f);
+		inp.value = (f - 32) / 1.8 ;
+	}
+
+
+    title.innerText = document.title;
+    sample.innerText = celToFah.toString() + celToFah.toString();
+</script>
+
+</body>
+</html>

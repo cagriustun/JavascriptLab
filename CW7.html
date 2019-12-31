@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>TIMING</title>
+
+<script>
+const url = "https://maeyler.github.io/JS/data/";
+sMap = new Map();
+let sArray = [];
+let randomStudents = [];
+function databaseOku() {
+    fetch(url + "Students.txt").then(res => res.text()).then(res => [this.addStudents(res)])  
+}
+function addStudents(text){
+    let data = text.split('\n');
+    for (let line of data){
+        let st = parseStudent(line);        
+        sMap.set(st);  
+        sArray.push(st);
+    }
+	console.log("Map boyutu: "+sMap.size +"\n"+ "Array Boyutu: "+sArray.length);
+} 
+function parseStudent(line){
+    let s = line.split("\t");   
+    let student = parseInt(s[0]);
+    return student; 
+}
+function mapArama(){
+    var count = 0;
+    var zaman = performance.now();
+    for(let n of randomStudents){
+        if(sMap.has(n)){
+            count = count + 1;
+        }
+    } 
+        zaman = performance.now() - zaman;
+        out2.innerText ="Map "+"\n"+
+		"Array içinde olan : "+count + "\n"+
+		"Geçen Zaman : "+zaman+" msec";
+}
+function arrayArama(){
+    var count = 0;
+    var zaman = performance.now();
+    for(let n of randomStudents){
+        if(sArray.includes(n)){
+            count = count + 1;
+        }
+    }
+    zaman = performance.now() - zaman;
+    out.innerText ="Array "+"\n"+
+    "Map içinde olan : "+count + "\n"+
+	"Geçen Zaman : "+zaman +" msec";
+}
+    
+function rastgeleSayi(){
+    let i = 1;
+    while (i<10000){
+        let ran = Math.random() * 9999;
+		randomStudents[i]= 215170000 + Math.floor(ran);
+		i++;
+    }
+}
+function allFunc(){
+rastgeleSayi();
+arrayArama();
+mapArama();
+}
+databaseOku();
+</script>
+</head>
+<body>
+<div id=div1 style="width: 300px;">
+<h3>TIMING (Map vs Array)</h3>
+<hr />
+<input type=button value="Hesapla" onClick="allFunc()" style="width: 300px;">
+<hr />
+<p id=out>Array</p>
+<hr />
+<p id=out2>Map</p>
+<div>
+</body>
+</html>

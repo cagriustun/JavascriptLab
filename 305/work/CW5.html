@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://maeyler.github.io/JS/sss/inspector.css" 
+          rel="stylesheet" media="all">
+    <link rel="icon" href="../images/icon192.png">
+    <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
+    <script src="c4_data.js"></script>
+    <script src="c6_object.js"></script>
+    <script src="../exam/Quiz.js"></script>
+    <script src="Async.js"></script>
+    <title>Eloquent JavaScript </title>
+</head>
+
+<body>
+<p><b id=docName></b> &nbsp;
+<a href="https://maeyler.github.io/JS/sss/">Read me</a> &nbsp;
+<a href="https://maeyler.github.io/JS/sss/Turkish">Turkish</a>
+</p>
+<div id=sss></div>
+<pre id=disp1></pre>
+<img id=disp2 /><br>
+<a href="https://raw.githubusercontent.com/cagriustun/JavascriptLab/master/Classwork1.png">CW1 - Introduction</a><br>
+<a href="https://cagriustun.github.io/JavascriptLab/Counting.html">CW2.1 - Making a web page - Counting</a><br>
+<a href="https://cagriustun.github.io/JavascriptLab/TempConversion.html">CW2.2 - Making a web page - Temperature Conversion</a><br>
+<a href="https://raw.githubusercontent.com/cagriustun/JavascriptLab/master/Classwork3.png">CW3 - Objects and Arrays</a><br>
+<script>
+"use strict";
+
+class Course{
+  constructor(n,t,d,r) {
+    this.name = n;
+    this.time = t;
+    this.date = d;
+    this.rooms = r;
+  }
+    toString() {
+        return this.name + " " + this.time + " " + this.date + " " + this.rooms + " " ;
+    }
+}
+
+class Student{
+  constructor(i,n,g,c) {
+    this.id = i;
+    this.name = n;
+    this.gpa = g;
+    this.courses = c;
+  }
+    toString() {
+        return this.id + " " + this.name + " " + this.gpa + " " + this.courses + " " ;
+    }
+}
+class Point{
+ constructor(x,y) {
+    this.x = x;
+    this.y = y;
+ }
+    toString() {
+        return this.x + " " + this.y + " " ;
+    }
+}
+class Point3D extends Point{
+ constructor(x,y,z) {
+    super(x,y);
+    this.z = z;
+ }
+    toString() {
+        return this.x + " " + this.y + " " + this.z + " ";
+    }
+}
+class CW5 extends Menu{
+    constructor(){
+    super();
+    this.course = (new Course("BLM305","14.00","01.01.2019","A103"));
+    this.student = new Student("1721221211","Çağrı Üstün","100","BLM305");
+    this.point = new Point(1,2);
+    this.point3d = new Point3D(1,2,3);
+}
+}
+
+
+
+var a, b, c, code;  //global variables
+function init() {
+    let len = 123, name = "Circle", pi = Math.PI;
+    a = [0, 11, "22", "abc"];
+    c = {len, name, pi};
+    display(new Chap4());
+    display(new Chap6());
+    display(new Quiz());
+    MENU = new CW5();
+    display(MENU);    
+       
+     
+}
+    docName.innerText = "Inspector "+VERSION;
+    try {
+        inspect(sss, init); //makes the table
+        inp.value = "new Date()";
+    } catch(e) {
+        reportError(e);
+    }
+</script>
+</body>
+</html>

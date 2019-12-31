@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Student Database </title>
+</head>
+<body>
+<h2 id="title">Courses</h2>
+<p>Course code: 
+<input type="text" onchange="controlFunction(value)" value="">
+<b>Ex: MATH 206</b>
+</p>
+<div id="courses"></div>
+
+<hr>
+<b>Sample code</b>
+<pre id="sample"></pre>
+<hr>
+
+<script>
+"use strict";
+const url = "https://maeyler.github.io/JS/data/";
+let coursesArray=[];
+let coursesLine;
+let coursesData;
+class Course{
+    constructor(id,clock,date, ...list){
+        this.id=id;
+        this.clock=clock;
+        this.date=date;
+        this.list=list;
+    }
+	toString(){
+		return this.id + " " + this.clock + " " + this.date + " " + this.list;
+	}
+}
+function readCourses(file) {
+    console.log("readCourses "+file);
+    fetch(url+file).then(r => r.text(),addCourses).then(addCourses);
+}
+function addCourses(txt){
+	coursesLine = txt.split("\n");
+	for(let a of coursesLine){
+		coursesData = a.split("\t");
+		let c = new Course();
+		c.id = coursesData[0];
+		c.clock = coursesData[1];
+		c.date = coursesData[2];
+		c.list = coursesData.slice(3);
+		coursesArray.push(c);
+	}
+	
+}
+function controlFunction(data){
+	for(let i=0; i<263; i++)
+	{
+		if(coursesArray[i].id==data)
+		{
+			courses.innerText = "Course ID => " + coursesArray[i].id + "\n";
+			courses.innerText += "Course Clock => " + coursesArray[i].clock + "\n";
+			courses.innerText += "Course Date => " + coursesArray[i].date + "\n";
+			courses.innerText += "Course List => " + coursesArray[i].list + "\n";
+			console.log(coursesArray[i].id);
+			break;
+		}
+		else
+		{
+			courses.innerText = "Courses not found.";
+
+		}
+	}
+}
+
+
+    title.innerText = document.title;
+    sample.innerText = readCourses+"\n"+addCourses+"\n"+controlFunction;
+    readCourses("Courses.txt");
+</script>
+
+
+
+</body></html>

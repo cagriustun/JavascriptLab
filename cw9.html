@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>GitHub Users</title>
+
+  <style>
+    body {
+        max-width: 300px;
+    }
+    img { 
+        width: 300px;
+		padding:5px;
+    }
+	#name1 {
+	font-weight: bold;
+	padding:5px;
+	}
+	#username {
+	padding:5px;
+	}
+	#company {
+	padding:5px;
+	}
+	#loca {
+	padding:5px;
+	}
+	#id {
+	padding:5px;
+	}
+	#blog {
+	padding:5px;
+	}
+    #foll {
+	padding:5px;
+    text-decoration: underline;
+	}
+    #out {
+	padding:5px;
+	}
+  </style>
+</head>
+<body>
+<h2 id=title></h2>
+<input type=text id=usr value=maeyler onChange="readUser()">
+<div id=pic></div>
+<div id=name1></div>
+<div id=username></div>
+<div id=company></div>
+<div id=loca></div>
+<div id=id></div>
+<div id=blog></div>
+<div id=foll></div>
+<div id=out></div>
+<script>
+"use strict";
+const NL = "\n", BR = "<BR>", 
+    URL = "https://api.github.com/users/"
+function error(t) {
+    out.style.color = 'red'
+    out.innerText = t; console.log(t)
+}
+function listFollowers(b) {
+    if (b.length) 
+      out.innerHTML += b.map(x => x.login).join(BR)
+}
+function userData(u) {
+    if (!u || !u.login) {
+      error(usr.value+' not found')
+      return
+    } 
+   
+
+
+
+    //start with a tiny image
+    let i = document.createElement("img");
+    i.src = u.avatar_url;
+    pic.appendChild(i);
+
+
+    //add name
+    let ad = u.name;
+    name1.innerHTML = ad;
+
+
+    //add link to GitHub
+	let uname = u.login;
+    username.innerHTML = uname;
+
+
+	//add company
+    let co = u.company
+    company.innerHTML = co;
+
+
+	//add location
+	let location1 = u.location;
+    loca.innerHTML = location1;
+
+
+    //add id
+	let id1 = u.id;
+    id.innerHTML = id1;
+
+
+	//add blog
+	let blog1 = u.blog;
+    blog.innerHTML = blog1;
+
+
+    //add followers
+    let p = u.followers+" followers";
+    foll.innerHTML = p   
+    fetch(URL+u.login+"/followers")
+      .then(r => r.json()) 
+      .then(listFollowers).catch(error);
+    
+	
+}
+function readUser() {
+    fetch(URL+usr.value).then(r => r.ok? r.json() : null).then(userData).catch(error);
+    
+    pic.innerHTML = ''
+    name1.innerHTML = ''
+	username.innerHTML = ''
+	company.innerHTML = ''
+	loca.innerHTML = ''
+	blog.innerHTML = ''
+    foll.innerHTML = ''
+    out.innerHTML = ''
+}
+    title.innerText = document.title;
+    readUser();
+    
+</script>
+</body>
+</html>

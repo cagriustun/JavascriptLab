@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Student Database </title>
+</head>
+<body>
+<h2 id="title">Courses</h2>
+<p>Student ID: 
+<input type="text" onchange="findStudents(value)" value="">
+<b>Ex: 116690070</b> (Courses taken by a given student)
+</p>
+<p>Student ID: 
+<input type="text" onchange="findExamSchedule(value)" value="">
+<b>Ex: 116690267</b> (Exam schedule for a given student)
+</p>
+<p>Course ID: 
+<input type="text" onchange="findStudentList(value)" value="">
+<b>Ex: ADP 105</b> (Student list taking a given course)
+</p>
+<p>Exam Room: 
+<input type="text" onchange="findExamRoom(value)" value="">
+<b>Ex: GG306</b> (Course list for a given exam room)
+</p>
+<p>Exam Room: 
+<input type="text" onchange="totalNumGivenRoom(value)" value="">
+<b>Ex: GG306</b> (Course list for a given room)
+</p>
+<p>Exam Clock: 
+<input type="text" onchange="examClock(value)" value="">
+<b>Ex: 15:00-18:00</b> (Total number of courses in a given exam clock)
+</p>
+<p>GPA: 
+<input type="text" onchange="findGPA(value)" value="">
+<b>Ex: 2.13</b> (Number of students above a given GPA)
+</p>
+<button onClick='randomStudents()'>Random Students</button>
+<button onClick='courses.innerText=""'>Clear</button>
+<br></br>
+<div id="courses"></div>
+
+<hr>
+<b>Sample code</b>
+<pre id="sample"></pre>
+<hr>
+
+<script>
+"use strict";
+const url = "https://maeyler.github.io/JS/data/";
+let gpaArray=[];
+let coursesArray=[];
+let coursesLine;
+let coursesData;
+let studentsArray=[];
+let studentsLine;
+let studentsData;
+let i;
+let studentMap = new Map();
+let courseMap = new Map();
+
+class Database extends Course,Student{
+    constructor(){
+        super();
+    }
+}
+class Course{
+    constructor(id,clock,date, ...list){
+        this.id=id;
+        this.clock=clock;
+        this.date=date;
+        this.list=list;
+    }
+	toString(){
+		return this.id + " " + this.clock + " " + this.date + " " + this.list;
+	}
+}
+class Student{
+    constructor(id,name,ort, ...list){
+        this.id=id;
+        this.name=name;
+        this.ort=ort;
+        this.list=list;
+    }
+	toString(){
+		return this.id + " " + this.name + " " + this.ort + " " + this.list;
+	}
+}
+function readCourses(file) {
+    console.log("readCourses "+file);
+    fetch(url+file).then(r => r.text(),addCourses).then(addCourses);
+}
+function readStudents(file) {
+    console.log("readStudents "+file);
+    fetch(url+file).then(r => r.text(),addStudents).then(addStudents);
+}
+function addCourses(txt){
+	coursesLine = txt.split("\n");
+	for(let a of coursesLine){
+		coursesData = a.split("\t");
+		let c = new Course();
+		c.id = coursesData[0];
+		c.clock = coursesData[1];
+		c.date = coursesData[2];
+		c.list = coursesData.slice(3);
+		courseMap.set(c.id,[c.clock,c.date,c.list]);
+	}
+    coursesArray = Array.from(courseMap);
+    //console.log(coursesArray);
+	
+}
+function addStudents(txt){
+	studentsLine = txt.split("\n");
+	for(let a of studentsLine){
+		studentsData = a.split("\t");
+		let s = new Student();
+		s.id = studentsData[0];
+		s.name = studentsData[1];
+		s.ort = studentsData[2];
+		s.list = studentsData.slice(3);
+		studentMap.set(s.id,[s.name,s.ort,[s.list]]);
+	}
+    studentsArray = Array.from(studentMap);
+    //console.log(studentsArray);
+		
+}
+function findStudents(data){
+    for(let a=0; a<3129; a++){
+        if(studentsArray[a][0]==data){
+        console.log(studentsArray[a][0]);
+        courses.innerText = "Students ID => " + studentsArray[a][0] + "\n";
+        courses.innerText += "Course List => " + studentsArray[a][1][2] + "\n";
+        break;
+        }
+        else{
+        courses.innerText = "Student is not found.";
+        }
+    }
+}
+
+function randomCourses() {
+    let ran = (Math.floor(Math.random() * 263));
+	displayCourses1(ran);
+}
+function randomStudents() {
+    let ran = (Math.floor(Math.random() * 3129));
+	displayCourses(ran);
+}
+function findGPA(data) {
+    let toplam=0;
+    let b = parseFloat(data);
+    for(let a=0;a<3128;a++){
+        gpaArray[a] = parseFloat(studentsArray[a][1][1]);
+        if(gpaArray[a]>data){
+            toplam++;
+        }
+    }
+    courses.innerText = "Total Students => " + toplam;
+
+}
+function findStudentList(data){
+    courses.innerText = "";
+    for(let c=0; c<263; c++){
+        if(coursesArray[c][0]==data){
+            for(let a=0;a<3128;a++){
+                    for(let b=0; b<studentsArray[a][1][2][0].length; b++){
+                        if(coursesArray[c][0] == studentsArray[a][1][2][0][b])
+                        {
+                            courses.innerText += studentsArray[a][0] + "\n"; 
+                        }
+                    }        
+            }
+        }
+    }
+
+}
+
+function findExamSchedule(data) {
+        courses.innerText = "";
+        for(let a=0;a<3128;a++){
+        if(studentsArray[a][0]==data){
+            for(let b=0; b<studentsArray[a][1][2][0].length; b++){
+                    for(let c=0; c<263; c++){
+                        if(coursesArray[c][0]==studentsArray[a][1][2][0][b]){
+                            courses.innerText += coursesArray[c][1][1] + "\n";
+                            }
+                    }
+                }
+            break;  
+        }
+    }
+}
+
+function findExamRoom(data){
+    courses.innerText = "";
+    for(let c=0; c<263; c++){
+        for(let a=0; a<coursesArray[c][1][2].length; a++){
+            if(coursesArray[c][1][2][a]==data){
+                courses.innerText += coursesArray[c][0] + "\n";   
+            }
+        }
+    }
+}
+
+function totalNumGivenRoom(data){
+    let top=0;
+    courses.innerText = "";
+    for(let c=0; c<263; c++){
+        for(let a=0; a<coursesArray[c][1][2].length; a++){
+            if(coursesArray[c][1][2][a]==data){
+                top++;
+            }
+        }
+    }
+    courses.innerText = "Odadaki Toplam Ders Sayısı: "+top;
+}
+
+function examClock(data){
+    courses.innerText = "";
+    for(let c=0; c<263; c++){
+          if(coursesArray[c][1][0]==data){
+                 courses.innerText += coursesArray[c][0] + "\n";
+          }
+    }
+}
+
+function displayCourses(deger){
+    courses.innerText = "Students ID => " + studentsArray[deger][0] + "\n";
+	courses.innerText += "Students Name => " + studentsArray[deger][1][0] + "\n";
+    courses.innerText += "Student GPA => " + studentsArray[deger][1][1] + "\n";
+    courses.innerText += "Course List => " + studentsArray[deger][1][2] + "\n";
+}
+
+
+	
+    title.innerText = document.title;
+    sample.innerText = readCourses+"\n"+addCourses+"\n"+examClock+"\n"+totalNumGivenRoom+"\n"+findExamRoom+"\n"+findExamSchedule+"\n"+findStudentList+"\n";
+    readCourses("Courses.txt");
+	readStudents("Students.txt");
+	//const myMap = new Map(coursesArray);
+</script>
+
+
+
+</body></html>
