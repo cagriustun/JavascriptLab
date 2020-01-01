@@ -3,14 +3,6 @@ var c = canvas.getContext('2d');
 var W = canvas.width;
 var H = canvas.height;
 
-var wall = new Audio();
-var scorePlus = new Audio();
-var lost = new Audio();
-
-wall.src = "music/wall.mp3";
-lost.src = "music/lost.mp3";
-scorePlus.src = "music/scorePlus.mp3";
-
 function kare(){
 	this.speedY = 0;
 	this.x = 0;
@@ -58,18 +50,15 @@ var mousemove = function(e){
 }
 
 function Down(){
-	gamer1.speedY -= 2; 
-	gamer2.speedY -= 2; 
+	gamer1.y += 30;
+	gamer2.y += 30;
 }
 function Up(){
-	gamer1.speedY -= 2; 
-	gamer2.speedY -= 2; 
+	gamer1.y -= 30; 
+	gamer2.y -= 30; 
 }
 function restart(){
 	window.location.reload();
-}
-function stop(){
-    document.getElementById("bttn").style.color = "green"; 
 }
 
 function draw(){
@@ -84,33 +73,25 @@ function draw(){
 	
 	if(ball.y + ball.r > H || ball.y < 0){
 		ball.vy *= -1;
-		wall.play();
 	}
 	
 	if(ball.x - ball.r < gamer1.x + gamer1.w || ball.x + ball.r > gamer2.x){
 		if(ball.x - ball.r < gamer1.x + gamer1.w){
 			if(ball.y + ball.r > gamer1.y && ball.y < gamer1.y + gamer1.h){	
 				score++;
-				scorePlus.play();
 			}
 			else{
-				//window.alert("Your Score : "+ score);
-				lost.play();
 				c.fillText("You are lost!",W/2-60,100);
 				c.fillText("Please Click Restart Button",W/2-120,120);
 				score = 0;
-				//window.location.reload();
 				clearInterval(init);
 			}
 		}
 		else if(ball.x + ball.r > gamer2.x){
 			if(ball.y + ball.r > gamer2.y && ball.y < gamer2.y + gamer2.h){
 				score++;
-				scorePlus.play();
 			}
 			else{
-				//window.alert("Your Score : "+ score);
-				lost.play();
 				c.fillText("You are lost!",W/2-60,100);
 				c.fillText("Please Click Restart Button",W/2-120,120);
 				score = 0;
